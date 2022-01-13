@@ -4,9 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import TagsProvider from './context/tags-provider';
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <TagsProvider>
+      <App />
+    </TagsProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
