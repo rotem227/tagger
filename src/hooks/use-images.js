@@ -2,18 +2,20 @@ import { useState, useEffect } from 'react';
 
 import providersMap from '../api/images';
 
-export default function useImages( providers ) {
+export default function useImages( providers, config = {} ) {
     const [ images, setImages ] = useState( [] );
 
     // On mount.
     useEffect( () => {
-        const dataProviders = providers.map( ( providerName ) => {
-            const provider = new providersMap[ providerName ]();
+        if ( providers.length ) {
+            const dataProviders = providers.map( ( providerName ) => {
+                const provider = new providersMap[ providerName ]( config );
 
-            return provider.getData();
-        } );
+                return provider.getData();
+            } );
 
-        Promise.all( dataProviders ).then( setImages );
+            Promise.all( dataProviders ).then( setImages );
+        }
     }, [] );
 
     return {
