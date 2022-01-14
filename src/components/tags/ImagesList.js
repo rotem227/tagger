@@ -1,5 +1,26 @@
 import { memo } from 'react';
 
+import styled, { css } from 'styled-components';
+
+const StyledItem = styled.li`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    ${ ( { theme } ) => css`
+        margin: ${ theme.spacing[ '8' ] } 0;
+    ` }
+`;
+
+const StyledImage = styled.img`
+    width: 50px;
+    height: auto;
+`;
+
+const StyledIcon = styled.span`
+    cursor: pointer;
+`;
+
 function ImagesList( { list = [], onRemove } ) {
     if ( ! list.length ) {
         return null;
@@ -9,11 +30,11 @@ function ImagesList( { list = [], onRemove } ) {
         <ul>
             {
                 list.map( ( { url }, index ) => (
-                    <li key={ url } style={ { display: 'flex', justifyContent: 'space-between', margin: '10px 0' } }>
-                        <img src={ url } style={ { width: '50px', height: 'auto' } } />
+                    <StyledItem key={ url }>
+                        <StyledImage src={ url } />
 
-                        <span onClick={ () => onRemove( index ) } style={ { cursor: 'pointer' } }>✕</span>
-                    </li>
+                        <StyledIcon onClick={ () => onRemove( index ) }>✕</StyledIcon>
+                    </StyledItem>
                 ) )
             }
         </ul>

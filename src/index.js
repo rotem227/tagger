@@ -7,11 +7,59 @@ import reportWebVitals from './reportWebVitals';
 import TagsProvider from './context/tags-provider';
 import ClassificationProvider from './context/classification-provider';
 
+import { ThemeProvider } from 'styled-components';
+
+const theme = {
+  color: {
+    primary: {
+      light: '#757ce8',
+      main: '#3f50b5',
+      dark: '#002884',
+      text: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      text: '#000',
+    },
+    disabled: {
+      light: '#eee',
+      main: '#aaa',
+      dark: '#555',
+      text: '#222',
+    },
+  },
+  font: {
+    size: {
+      sm: '10px',
+      md: '16px',
+      lg: '24px',
+      xl: '36px',
+      xxl: '48px',
+    },
+  },
+  spacing: {
+    '0': '0px',
+    '4': '4px',
+    '8': '8px',
+    '12': '12px',
+    '16': '16px',
+    '20': '20px',
+    '24': '24px',
+    '28': '28px',
+    '32': '32px',
+    '64': '64px',
+  },
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <TagsProvider>
       <ClassificationProvider>
-        <App />
+        <ThemeProvider theme={ theme }>
+          <App />
+        </ThemeProvider>
       </ClassificationProvider>
     </TagsProvider>
   </React.StrictMode>,

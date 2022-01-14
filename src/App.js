@@ -6,7 +6,7 @@ import ImagesDisplay from './components/images-display/ImagesDisplay';
 import Tags from './components/tags/Tags';
 
 function App() {
-  const { images } = useImages( [ 'Picsum' ], { limit: 3 } );
+  const { images } = useImages( [ 'Picsum' ], { limit: 10 } );
 
   useEffect( () => {
     console.log( 'images from app: ', images );

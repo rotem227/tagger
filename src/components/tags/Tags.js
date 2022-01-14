@@ -1,11 +1,27 @@
 
 import { useCallback } from 'react';
 
+import styled, { css } from 'styled-components';
+
 import useTags from '../../hooks/use-tags';
 import useClassifier from '../../hooks/use-classifier';
 
 import AddCard from './AddCard';
 import TagCard from './TagCard';
+
+import Flex from '../../ui/Flex';
+
+const Wrapper = styled( Flex )`
+    overflow-x: auto;
+    position: relative;
+    z-index: 2;
+    
+    ${ ( { theme } ) => css`
+        background-color: ${ theme.color.disabled.light };
+        border-top: 1px solid ${ theme.color.disabled.dark };
+        padding: ${ theme.spacing[ '16' ] };
+    ` }
+`;
 
 export default function Tags() {
     const { tags, removeTag, renameTag } = useTags();
@@ -20,27 +36,29 @@ export default function Tags() {
     }, [] );
 
     return (
-        <section style={ { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' } }>
-            <AddCard />
+        <Wrapper>
+            <Flex gap="20px">
+                <AddCard />
 
-            <div style={ { display: 'flex', flexWrap: 'nowrap', flexDirection: 'row-reverse' } }>
-                {
-                tags.map( ( { name, color, contrast, images }, index ) => {
-                    return (
-                        <TagCard
-                            key={ name }
-                            name={ name }
-                            color={ color }
-                            contrast={ contrast }
-                            images={ images }
-                            index={ index }
-                            onRemove={ handleRemove }
-                            onRename={ handleRename }
-                        />
-                    );
-                } )
-            }
-            </div>
-        </section>
+                <Flex direction="row-reverse" gap="20px">
+                    {
+                        tags.map( ( { name, color, contrast, images }, index ) => {
+                            return (
+                                <TagCard
+                                    key={ name }
+                                    name={ name }
+                                    color={ color }
+                                    contrast={ contrast }
+                                    images={ images }
+                                    index={ index }
+                                    onRemove={ handleRemove }
+                                    onRename={ handleRename }
+                                />
+                            );
+                        } )
+                    }
+                </Flex>
+            </Flex>
+        </Wrapper>
     );
 }
