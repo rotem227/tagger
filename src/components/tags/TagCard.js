@@ -36,6 +36,9 @@ const StyledHeader = styled.header`
 `;
 
 const StyledMain = styled.main`
+    height: 149px;
+    overflow-y: auto;
+
     ${ ( { theme } ) => css`
         padding: 0 ${ theme.spacing[ '8' ] };
     ` }
