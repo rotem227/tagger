@@ -1,17 +1,36 @@
 
+import { useContext, useCallback } from 'react';
+
+import { Context as TagsContext } from '../../context/tags-provider';
+
 import AddCard from './AddCard';
 import TagCard from './TagCard';
 
 export default function TagsList( { list = [] } ) {
-    return (
-        <div style={ { display: 'flex' } }>
-            <AddCard />
+    const tagsContext = useContext( TagsContext );
 
-            {
-                list.map( ( { name, color } ) => (
-                    <TagCard key={ name } name={ name } color={ color } />
-                ) ).reverse()
-            }
-        </div>
+    const handleRemove = useCallback( ( index ) => tagsContext.setTags( ( prevState ) => {
+        const data = [ ...prevState ];
+
+        data.splice( index, 1 );
+
+        return data;
+    } ), [] );
+
+    return (
+        <div style={ { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' } }>
+                <AddCard />
+
+                {
+                    list.map( ( data, index ) => (
+                        <TagCard
+                            { ...data }
+                            key={ data.name }
+                            index={ index }
+                            onRemove={ handleRemove }
+                        />
+                    ) ).reverse()
+                }
+            </div>
     );
 }
