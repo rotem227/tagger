@@ -1,9 +1,10 @@
+import { useMemo } from 'react';
+
 import styled, { css } from 'styled-components';
 
 import ImageTag from './ImageTag';
 
 import Flex from '../../ui/Flex';
-import Heading from '../../ui/Heading';
 import Text from '../../ui/Text';
 
 const StyledWrapper = styled( Flex )`
@@ -21,17 +22,10 @@ const StyledImageInfo = styled( Flex )`
     ` }
 `;
 
-const StyledImageBox = styled.div`    
-    background-size: cover;
+const StyledImage = styled.img`    
     height: 150px;
     width: 200px;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    ${ ( { url } ) => css`
-        background-image: url(${ url });
-    ` }
+    object-fit: cover;
 `;
 
 export default function ImagesDisplay( { images } ) {
@@ -40,11 +34,11 @@ export default function ImagesDisplay( { images } ) {
     }
 
     return (
-        <StyledWrapper wrap gap='20px'>
+        <StyledWrapper id='images-display' wrap gap='20px'>
             {
-                images[ 0 ].map( ( imageData ) => (
+                images[ 0 ].map( ( imageData, index ) => (
                     <div key={ imageData.id }>
-                        <StyledImageBox url={ imageData.url } />
+                        <StyledImage src={ imageData.url } />
                         
                         <StyledImageInfo justifyContent="space-between">
                             <Text>{ imageData.label }</Text>

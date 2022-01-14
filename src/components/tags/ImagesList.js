@@ -12,16 +12,10 @@ const StyledItem = styled.li`
     ` }
 `;
 
-const StyledImageBox = styled.img`
+const StyledImage = styled.img`
     width: 50px;
     height: 40px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-
-    ${ ( { url } ) => css`
-        background-image: url(${ url });
-    ` }
+    object-fit: cover;
 `;
 
 const StyledIcon = styled.span`
@@ -38,7 +32,7 @@ function ImagesList( { list = [], onRemove } ) {
             {
                 list.map( ( { url }, index ) => (
                     <StyledItem key={ url }>
-                        <StyledImageBox url={ url } />
+                        <StyledImage src={ url } />
 
                         <StyledIcon onClick={ () => onRemove( index ) }>✕</StyledIcon>
                     </StyledItem>
