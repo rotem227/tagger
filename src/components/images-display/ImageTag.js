@@ -1,14 +1,14 @@
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 
 import styled, { css } from 'styled-components';
 
 import useTags from '../../hooks/use-tags';
 import useClassifier from '../../hooks/use-classifier';
 
-import Button from '../../ui/Button';
-import Input from '../../ui/Input';
 import Text from '../../ui/Text';
+
+import ImageTagItem from './ImageTagItem';
 
 const StyledWrapper = styled.div`
     border-radius: 2px;
@@ -21,55 +21,33 @@ const StyledWrapper = styled.div`
     ` }
 `;
 
-const StyledTagsList = styled.div`
-    min-width: 150px;
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    border-radius: 5px;
-
-    ${ ( { theme } ) => css`
-        background-color: ${ theme.color.disabled.light };
-        border: 1px solid ${ theme.color.disabled.dark };
-        padding: ${ theme.spacing[ '8' ] };
-    ` }
-`;
-
-const StyledTagItem = styled.li`
-    ${ ( { theme, color, contrast } ) => css`
-        color: ${ contrast };
-        background-color: ${ color };
-        padding: ${ theme.spacing[ '8' ] };
-        margin-bottom: ${ theme.spacing[ '8' ] };
-    ` }
-`;
-
-const StyledButton = styled( Button )`
-    width: 100%;
-`;
-
 export default function ImageTag( { imageData } ) {
     const [ selected, setSelected ] = useState( {} );
 
     const [ isSelectMode, setIsSelectMode ] = useState( false );
 
+    const { data, classify, getUsedTags } = useClassifier( imageData );
+    
     const { tags } = useTags();
 
-    const { classify } = useClassifier();
+    const usedTags = getUsedTags( imageData.url );
 
-    const resetSelection = () => {
+    const availableTags = useMemo( () => tags.filter( ( { name } ) => ! usedTags[ name ] ), [ tags, data ] );
+
+    const resetSelection = useCallback( () => {
         setIsSelectMode( false );
 
         setSelected( {} );
-    };
+    }, [] );
 
-    const handleApply = () => {
+
+    const handleApply = useCallback( () => {
         classify( Object.keys( selected ), imageData )
 
         resetSelection();
-    };
+    }, [ selected ] );
 
-    const handleSelect = ( tagName ) => {
+    const handleSelect = useCallback( ( tagName ) => {
         if ( selected[ tagName ] ) {
             setSelected( ( prevState ) => {
                 const stateData = { ...prevState };
@@ -81,9 +59,9 @@ export default function ImageTag( { imageData } ) {
         } else {
             setSelected( ( prevState ) => ( { ...prevState, [ tagName ]: true } ) );
         }
-    };
+    }, [] );
 
-    if ( ! tags.length ) {
+    if ( ! availableTags.length ) {
         return null;
     }
 
@@ -91,22 +69,14 @@ export default function ImageTag( { imageData } ) {
         <StyledWrapper onMouseMove={ () => setIsSelectMode( true ) }>
             <Text variant="sm">✐ TAG</Text>
 
-            {
-                isSelectMode &&
-                <StyledTagsList onMouseLeave={ resetSelection }>
-                    <ul>
-                        {
-                            tags.map( ( { name, color, contrast } ) => (
-                                < StyledTagItem color={ color } contrast={ contrast } key={ name }>
-                                    <Input type="checkbox" value={ selected[ name ] ? 'checked' : '' } onChange={ () => handleSelect( name ) } />  <label>{ name }</label>
-                                </ StyledTagItem>
-                            ) )
-                        }
-                    </ul>
-
-                    <StyledButton onClick={ handleApply }>APPLY</StyledButton>
-                </StyledTagsList>
-            }
+            <ImageTagItem
+                tags={ availableTags }
+                selected={ selected }
+                isSelectMode={ isSelectMode }
+                onReset={ resetSelection }
+                onSelect={ handleSelect }
+                onApply={ handleApply }
+            />
         </StyledWrapper>
     );
 }

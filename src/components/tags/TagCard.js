@@ -14,8 +14,12 @@ const StyledIcon = styled.span`
 
 const StyledInput = styled( Input )`
     height: 20px;
-    padding: 2px;
-    max-width: 140px;
+    width: 160px;
+
+    ${ ( { theme } ) => css`
+        padding: ${ theme.spacing[ '2' ] } ${ theme.spacing[ '4' ] };
+        font-size: ${ theme.font.size.sm };
+    ` }
 `;
 
 const StyledRemoveIcon = styled( StyledIcon )`
@@ -44,7 +48,7 @@ const StyledMain = styled.main`
     ` }
 `;
 
-function TagCard( { name, color, contrast, images, index, onRename, onRemove } ) {
+function TagCard( { name, color, contrast, index, onRename, onRemove } ) {
     const [ isEditMode, setIsEditMode ] = useState( false );
 
     const inputField = useRef( null );
@@ -83,7 +87,7 @@ function TagCard( { name, color, contrast, images, index, onRename, onRemove } )
                     
                     { ! isEditMode && <StyledIcon onClick={ () => setIsEditMode( true ) }>✎</StyledIcon> }
                     
-                    <StyledRemoveIcon onClick={ handleRemove }>✖</StyledRemoveIcon>
+                    { ! isEditMode && <StyledRemoveIcon onClick={ handleRemove }>✖</StyledRemoveIcon> }
                 </div>
             </StyledHeader>
             

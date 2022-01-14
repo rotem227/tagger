@@ -35,14 +35,14 @@ const StyledButton = styled( Button )`
     width: 100%;
 `;
 
-export default function AddCard( { onClose } ) {
+export default function AddCard() {
     const { addTag } = useTags();
 
     const nameField = useRef( null );
 
     const colorField = useRef( null );
 
-    const randomColor = '#' + Math.floor( Math.random() * 16777215 ).toString( 16 );
+    const randomColor = '#' + ( 0x1000000 + Math.random() * 0xffffff ).toString( 16 ).substr( 1,6 );
 
     const handleSave = () => {
         const name = nameField.current.value;
