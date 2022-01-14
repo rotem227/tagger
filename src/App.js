@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import styled, { css } from 'styled-components';
 
@@ -17,10 +17,6 @@ const StyledHeader = styled.header`
 
 function App() {
   const { images } = useImages( [ 'Picsum' ], { limit: 10 } );
-
-  useEffect( () => {
-    console.log( 'images from app: ', images );
-  }, [ images ] );
 
   return (
     <div className="App">
