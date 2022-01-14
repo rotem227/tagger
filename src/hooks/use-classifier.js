@@ -43,7 +43,7 @@ export default function useClassifier() {
         context.setData( ( prevState ) => {
             const stateData = { ...prevState };
 
-            const savedData = [ ...stateData[ oldKey ] ];
+            const savedData = stateData[ oldKey ] ? [ ...stateData[ oldKey ] ] : [];
 
             delete stateData[ oldKey ];
 
