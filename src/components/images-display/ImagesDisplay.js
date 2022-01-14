@@ -1,3 +1,5 @@
+import ImageTag from './ImageTag';
+
 export default function ImagesDisplay( { images } ) {
     if ( ! images.length ) {
         return null;
@@ -11,7 +13,8 @@ export default function ImagesDisplay( { images } ) {
                         <div style={ { width: '200px', height: '150px', backgroundImage: `url(${ url })`, backgroundSize: 'cover' } }></div>
                         <div style={ { display: 'flex', justifyContent: 'space-between', marginTop: '10px' } }>
                             <label>{ label }</label>
-                            <button>Tag</button>
+                            
+                            <ImageTag />
                         </div>
                     </div>
                 ) )
