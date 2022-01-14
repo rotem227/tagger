@@ -6,17 +6,17 @@ function ImagesList( { list = [], onRemove } ) {
     }
 
     return (
-        <>
+        <ul>
             {
                 list.map( ( { url }, index ) => (
-                    <div key={ url } style={ { display: 'flex', justifyContent: 'space-between' } }>
+                    <li key={ url } style={ { display: 'flex', justifyContent: 'space-between', margin: '10px 0' } }>
                         <img src={ url } style={ { width: '50px', height: 'auto' } } />
 
-                        <span onClick={ () => onRemove( index ) }>X</span>
-                    </div>
+                        <span onClick={ () => onRemove( index ) } style={ { cursor: 'pointer' } }>✕</span>
+                    </li>
                 ) )
             }
-        </>
+        </ul>
     );
 }
 

@@ -30,16 +30,25 @@ export default function useTags() {
     }, [] );
 
     const removeTag = useCallback( ( index ) => context.setTags( ( prevState ) => {
-        const data = [ ...prevState ];
+        const stateData = [ ...prevState ];
 
-        data.splice( index, 1 );
+        stateData.splice( index, 1 );
 
-        return data;
+        return stateData;
+    } ), [] );
+
+    const renameTag = useCallback( ( index, newName ) => context.setTags( ( prevState ) => {
+        const stateData = [ ...prevState ];
+
+        stateData[ index ].name = newName;
+
+        return stateData;
     } ), [] );
 
     return {
         tags,
         addTag,
         removeTag,
+        renameTag,
     };
 }

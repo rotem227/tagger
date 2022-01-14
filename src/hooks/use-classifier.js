@@ -7,16 +7,18 @@ export default function useClassifier() {
 
     const { data } = context || {};
 
-    const classify = useCallback( ( tagName, imageData ) => {
+    const classify = useCallback( ( tags, imageData ) => {
         context.setData( ( prevState) => {
             const stateData = { ...prevState };
 
-            if ( ! stateData[ tagName ] ) {
-                stateData[ tagName ] = [];
-            }
+            tags.forEach( ( tag ) => {
+                if ( ! stateData[ tag ] ) {
+                    stateData[ tag ] = [];
+                }
 
-            // Creating a new instance in order to trigger a state change.
-            stateData[ tagName ] = [ ...stateData[ tagName ], imageData ];
+                // Creating a new instance in order to trigger a state change.
+                stateData[ tag ] = [ ...stateData[ tag ], imageData ];
+            } );
 
             return stateData;
         } );
@@ -35,11 +37,26 @@ export default function useClassifier() {
 
             return stateData;
         } );
-    }, [] );    
+    }, [] );  
+
+    const renameKey = useCallback( ( oldKey, newKey ) => {
+        context.setData( ( prevState ) => {
+            const stateData = { ...prevState };
+
+            const savedData = [ ...stateData[ oldKey ] ];
+
+            delete stateData[ oldKey ];
+
+            stateData[ newKey ] = savedData;
+
+            return stateData;
+        } );
+    }, [] );
 
     return {
         data,
         classify,
         removeClassification,
+        renameKey,
     };
 }
