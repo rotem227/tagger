@@ -1,21 +1,22 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 
-import { useContext } from 'react';
-
-import { Context as TagsContext } from '../../context/tags-provider';
+import useTags from '../../hooks/use-tags';
+import useClassifier from '../../hooks/use-classifier';
 
 const tagsDefaultOption = {
     name: 'Select..',
     color: '#fff',
 };
 
-export default function ImageTag() {
-    const tagsContext = useContext( TagsContext );
-    
+export default function ImageTag( { imageData } ) {
     const [ isSelectMode, setIsSelectMode ] = useState( false );
 
-    const tags = [ tagsDefaultOption, ...tagsContext.tags ];
+    const { tags } = useTags();
+
+    const { classify } = useClassifier();
+
+    const tagsSelections = [ tagsDefaultOption, ...tags ];
 
     const timer = useRef( null );
 
@@ -48,16 +49,18 @@ export default function ImageTag() {
         }
     };
 
+    const handleSelectClick = () => {
+        isActiveSelection.current = true;
+    };
+
     const handleApply = () => {
-        if ( tagsDefaultOption.name !== tagsSelect.current.value ) {
-            console.log( 'selected tag: ', tagsSelect.current.value );
+        const selectedTag = tagsSelect.current.value;
+
+        if ( selectedTag !== tagsDefaultOption.name ) {
+            classify( selectedTag, imageData );
         }
 
         setIsSelectMode( false );
-    };
-
-    const handleSelectClick = () => {
-        isActiveSelection.current = true;
     };
 
     return (
@@ -69,7 +72,7 @@ export default function ImageTag() {
                 <div style={ { position: 'absolute', top: '-1px', left: '-1px', padding: '10px', border: '1px solid black', backgroundColor: 'lightgrey' } }  onMouseLeave={ handleTagSelectionLeave }>
                     <select onClick={ handleSelectClick } ref={ tagsSelect } style={ { width: '100%', padding: '10px' } }>
                         {
-                            tags.map( ( { name, color, contrast } ) => (
+                            tagsSelections.map( ( { name, color, contrast } ) => (
                                 <option key={ name } value={ name } style={ { backgroundColor: color, color: contrast } }>{ name }</option>
                             ) )
                         }

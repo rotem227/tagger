@@ -5,11 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import TagsProvider from './context/tags-provider';
+import ClassificationProvider from './context/classification-provider';
 
 ReactDOM.render(
   <React.StrictMode>
     <TagsProvider>
-      <App />
+      <ClassificationProvider>
+        <App />
+      </ClassificationProvider>
     </TagsProvider>
   </React.StrictMode>,
   document.getElementById('root')

@@ -8,13 +8,13 @@ export default function ImagesDisplay( { images } ) {
     return (
         <div style={ { width: '70%', display: 'flex', flexWrap: 'wrap', gap: '20px' } }>
             {
-                images[ 0 ].map( ( { id, url, label } ) => (
-                    <div key={ id }>
-                        <div style={ { width: '200px', height: '150px', backgroundImage: `url(${ url })`, backgroundSize: 'cover' } }></div>
+                images[ 0 ].map( ( imageData ) => (
+                    <div key={ imageData.id }>
+                        <div style={ { width: '200px', height: '150px', backgroundImage: `url(${ imageData.url })`, backgroundSize: 'cover' } }></div>
                         <div style={ { display: 'flex', justifyContent: 'space-between', marginTop: '10px' } }>
-                            <label>{ label }</label>
+                            <label>{ imageData.label }</label>
                             
-                            <ImageTag />
+                            <ImageTag imageData={ imageData } />
                         </div>
                     </div>
                 ) )

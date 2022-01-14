@@ -1,14 +1,43 @@
+import { useRef, useEffect } from 'react';
 
-import { useState } from 'react';
+import useTags from '../../hooks/use-tags';
 
-import NewCardData from './NewCardData';
+export default function AddCard( { onClose } ) {
+    const { addTag } = useTags();
 
-export default function AddCard() {
-    const [ isEditMode, setIsEditMode ] = useState( false );
-    
+    const nameField = useRef( null );
+
+    const colorField = useRef( null );
+
+    const randomColor = '#' + Math.floor( Math.random() * 16777215 ).toString( 16 );
+
+    const handleSave = () => {
+        const name = nameField.current.value;
+
+        if ( name ) {
+            const color = colorField.current.value;
+
+            addTag( { name, color } );
+
+            nameField.current.value = '';
+            colorField.current.value = randomColor;
+        } else {
+            alert( 'Please select a tag name.' );
+        }
+    };
+
+    useEffect( () => {
+        nameField.current.focus();
+    }, [] );
+
     return (
-        <div onClick={ () => ! isEditMode && setIsEditMode( true ) } style={ { width: '300px', border: '1px solid black', flexShrink: 0, padding: '20px' } }>
-            { isEditMode ? <NewCardData onClose={ () => setIsEditMode( false ) } /> : <span>ADD NEW</span> }
+        <div style={ { display: 'inline-block', flexShrink: 0, } }>
+            <div>
+                <input type="text" ref={ nameField } />
+                <input type="color" ref={ colorField } defaultValue={ randomColor } />
+            </div>
+            
+            <button onClick={ handleSave }>Save</button>
         </div>
     );
 }

@@ -1,6 +1,8 @@
-import { memo } from 'react';
+import { useEffect, memo } from 'react';
 
-function TagCard( { name, color, contrast, index, onRemove } ) {
+import CardContent from './CardContent';
+
+function TagCard( { name, color, contrast, images, index, onRemove } ) {
     const handleRemove = () => {
         if ( window.confirm( `Are you sure you want to delete the tag: ${ name }` ) == true ) {
             onRemove( index );
@@ -14,8 +16,9 @@ function TagCard( { name, color, contrast, index, onRemove } ) {
 
                 <span onClick={ handleRemove }>X</span>
             </header>
+            
             <main style={ { padding: '10px' } }>
-                COntent
+                <CardContent tagName={ name } />
             </main>
         </div>
     );

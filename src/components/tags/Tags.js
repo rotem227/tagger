@@ -1,17 +1,35 @@
-import { useContext } from 'react';
 
-import { Context as TagsContext } from '../../context/tags-provider';
+import { useCallback } from 'react';
 
-import TagsList from './TagsList';
+import useTags from '../../hooks/use-tags';
+
+import AddCard from './AddCard';
+import TagCard from './TagCard';
 
 export default function Tags() {
-    const tagsContext = useContext( TagsContext );
+    const { tags, removeTag } = useTags();
+
+    const handleRemove = useCallback( ( index ) => removeTag( index ), [] );
 
     return (
-        <section>
-            <hr />
+        <section style={ { display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' } }>
+            <AddCard />
 
-            <TagsList list={ tagsContext.tags } />
+            {
+                tags.map( ( { name, color, contrast, images }, index ) => {
+                    return (
+                        <TagCard
+                            key={ name }
+                            name={ name }
+                            color={ color }
+                            contrast={ contrast }
+                            images={ images }
+                            index={ index }
+                            onRemove={ handleRemove }
+                        />
+                    );
+                } ).reverse()
+            }
         </section>
     );
 }
