@@ -2,6 +2,18 @@ import { useContext, useCallback } from 'react';
 
 import { Context } from '../context/classification-provider';
 
+// Saving the images list, per each tag name, in order to filter the tags that each image has already been added to.
+const savedImages = {};
+
+const cacheImageClassifications = ( tag, key ) => {
+    if ( ! savedImages[ tag ] ) {
+        savedImages[ tag ] = {};
+    }
+
+    savedImages[ tag ][ key ] = true;
+};
+
+
 export default function useClassifier() {
     const context = useContext( Context );
 
@@ -15,6 +27,8 @@ export default function useClassifier() {
                 if ( ! stateData[ tag ] ) {
                     stateData[ tag ] = [];
                 }
+
+                cacheImageClassifications( tag, imageData.url );
 
                 // Creating a new instance in order to trigger a state change.
                 stateData[ tag ] = [ ...stateData[ tag ], imageData ];
@@ -31,7 +45,10 @@ export default function useClassifier() {
             // Creating a new instance in order to trigger a state change.
             const tagData = [ ...stateData[ tagName ] ];
 
-            tagData.splice( imageIndex, 1 );
+            const removedImageData = tagData.splice( imageIndex, 1 );
+
+            // Removing the image key from the saved images cached data.
+            delete savedImages[ tagName ][ removedImageData[ 0 ].url ];
 
             stateData[ tagName ] = tagData;
 
@@ -44,13 +61,28 @@ export default function useClassifier() {
             const stateData = { ...prevState };
 
             const savedData = stateData[ oldKey ] ? [ ...stateData[ oldKey ] ] : [];
+            const cachedImagesData = savedImages[ oldKey ];
 
             delete stateData[ oldKey ];
+            delete savedImages[ oldKey ];
 
             stateData[ newKey ] = savedData;
+            savedImages[ newKey ] = cachedImagesData;
 
             return stateData;
         } );
+    }, [] );
+
+    const getUsedTags = useCallback( ( key ) => {
+        const tags = {};
+
+        Object.entries( savedImages ).forEach( ( [ tagName, data ] ) => {
+            if ( data && data[ key ] ) {
+                tags[ tagName ] = true;
+            }
+        } );
+
+        return tags;
     }, [] );
 
     return {
@@ -58,5 +90,6 @@ export default function useClassifier() {
         classify,
         removeClassification,
         renameKey,
+        getUsedTags,
     };
 }
