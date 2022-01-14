@@ -14,7 +14,7 @@ const StyledItem = styled.li`
 
 const StyledImageBox = styled.img`
     width: 50px;
-    height: 50px;
+    height: 40px;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

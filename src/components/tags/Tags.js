@@ -11,9 +11,12 @@ import TagCard from './TagCard';
 
 import Flex from '../../ui/Flex';
 
-const Wrapper = styled( Flex )`
+const StyledWrapper = styled( Flex )`
     overflow-x: auto;
-    position: relative;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     z-index: 2;
     
     ${ ( { theme } ) => css`
@@ -25,6 +28,7 @@ const Wrapper = styled( Flex )`
 
 export default function Tags() {
     const { tags, removeTag, renameTag } = useTags();
+    
     const { renameKey } = useClassifier();
 
     const handleRemove = useCallback( ( index ) => removeTag( index ), [] );
@@ -36,7 +40,7 @@ export default function Tags() {
     }, [] );
 
     return (
-        <Wrapper>
+        <StyledWrapper>
             <Flex gap="20px">
                 <AddCard />
 
@@ -59,6 +63,6 @@ export default function Tags() {
                     }
                 </Flex>
             </Flex>
-        </Wrapper>
+        </StyledWrapper>
     );
 }

@@ -54,13 +54,15 @@ const theme = {
 };
 
 ReactDOM.render(
-  <TagsProvider>
+  <React.StrictMode>
+    <TagsProvider>
       <ClassificationProvider>
         <ThemeProvider theme={ theme }>
           <App />
         </ThemeProvider>
       </ClassificationProvider>
-    </TagsProvider>,
+    </TagsProvider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 
