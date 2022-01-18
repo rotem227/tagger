@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-
 import styled, { css } from 'styled-components';
+
+import usePreloadImages from '../../hooks/use-preload-images';
 
 import ImageTag from './ImageTag';
 
@@ -29,7 +29,9 @@ const StyledImage = styled.img`
 `;
 
 export default function ImagesDisplay( { images } ) {
-    if ( ! images.length ) {
+    const { isAllReady } = usePreloadImages( images[ 0 ], 'url' );
+
+    if ( ! isAllReady ) {
         return null;
     }
 
