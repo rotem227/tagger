@@ -16,7 +16,7 @@ const StyledHeader = styled.header`
 `;
 
 function App() {
-  const { images } = useImages( [ 'Picsum' ], { limit: 10 } );
+  const { images } = useImages( [ 'Pixabay' ], { limit: 50 } );
 
   return (
     <div className="App">
