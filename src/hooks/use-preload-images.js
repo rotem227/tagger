@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
-const preloadImages = ( images ) => {
+const preloadImages = ( images, key ) => {
     const promises = [];
 
-    images.forEach( ( { url } ) => {
+    images.forEach( ( image, index ) => {
         promises.push( new Promise( ( res ) => {
             const img = new Image();
 
-            img.src = url;
+            img.src = key ? image[ key ] : image;
             
             img.onload = () => res();
         } ) );
@@ -16,16 +16,20 @@ const preloadImages = ( images ) => {
     return Promise.all( promises );
 };
 
-export default function usePreloadImages( images, key ) {
-    const [ isAllReady, setIsAllReady ] = useState( false );
+export default function usePreloadImages( images = [], config = {} ) {
+    const [isReady, setIsReady ] = useState( false );
+
+    const { key, limit } = config;
 
     useEffect( () => {
-        if ( images?.length ) {
-            preloadImages( images ).then( () => setIsAllReady( true ) );
+        if ( images.length ) {
+            const bulk = limit ? images.slice( 0, limit ) : images;
+
+            preloadImages( bulk, key ).then( () => setIsReady( true ) );
         }
     }, [ images ] );
 
     return {
-        isAllReady,
+       isReady,
     };
 }

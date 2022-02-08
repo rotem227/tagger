@@ -6,11 +6,13 @@ import ImageTag from './ImageTag';
 
 import Flex from '../../ui/Flex';
 import Grid from '../../ui/Grid';
+import Loader from '../../ui/Loader';
 import Text from '../../ui/Text';
 
 const StyledWrapper = styled( Grid )`
     height: calc(100vh - 300px);
     overflow-y: auto;
+    position: relative;
 
     ${ ( { theme } ) => css`
         padding: 0 ${ theme.spacing[ '16' ] } ${ theme.spacing[ '16' ] };
@@ -40,19 +42,14 @@ const StyledImage = styled.img`
     @media screen and (min-width: 1200px) { --styled-image-height: 12vw; }
 `;
 
-export default function ImagesDisplay( { images } ) {
-    const { isAllReady } = usePreloadImages( images[ 0 ], 'url' );
-
-    if ( ! isAllReady ) {
-        return null;
-    }
-
+export default function ImagesDisplay( { images, lazyload } ) {    
     return (
         <StyledWrapper gap='3vw'>
             {
-                images[ 0 ].map( ( imageData ) => (
+                images?.length ?
+                images[ 0 ].map( ( imageData, index ) => (
                     <ImageContainer key={ imageData.id }>
-                        <StyledImage src={ imageData.url } />
+                        <StyledImage importance="low" src={ imageData.url } loading={ lazyload ? 'lazy' : null } />
                         
                         <StyledImageInfo justifyContent="space-between">
                             <Text>{ imageData.label }</Text>
@@ -60,8 +57,9 @@ export default function ImagesDisplay( { images } ) {
                             <ImageTag imageData={ imageData } />
                         </StyledImageInfo>
                     </ImageContainer>
-                ) )
+                ) ) :
+                <Loader/ >
             }
         </StyledWrapper>
     );
-}
+}  

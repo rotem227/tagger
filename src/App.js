@@ -24,7 +24,7 @@ function App() {
           <Heading>TAGGER</Heading>
         </StyledHeader>
         
-        <ImagesDisplay images={ images } />
+        <ImagesDisplay images={ images } lazyload={ true } />
         
         <Tags />
       </div>
