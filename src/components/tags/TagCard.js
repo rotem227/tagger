@@ -2,6 +2,8 @@ import { useState, useRef, useEffect, memo } from 'react';
 
 import styled, { css } from 'styled-components';
 
+import useClassifier from '../../hooks/use-classifier';
+
 import Input from '../../ui/Input';
 
 import { Card } from './Styled';
@@ -51,6 +53,8 @@ const StyledMain = styled.main`
 function TagCard( { name, color, contrast, index, onRename, onRemove } ) {
     const [ isEditMode, setIsEditMode ] = useState( false );
 
+    const { classify } = useClassifier();
+
     const inputField = useRef( null );
 
     const handleRemove = () => {
@@ -69,6 +73,14 @@ function TagCard( { name, color, contrast, index, onRename, onRemove } ) {
         setIsEditMode( false );
     };
 
+    const handleDrop = ( e ) => {
+        e.preventDefault();
+
+        const imageData = JSON.parse( e.dataTransfer.getData( 'imageData' ) );
+
+        classify( [ name ], imageData.url, imageData );
+    };
+
     useEffect( () => {
         if ( isEditMode ) {
             inputField.current.focus();
@@ -76,7 +88,7 @@ function TagCard( { name, color, contrast, index, onRename, onRemove } ) {
     }, [ isEditMode ] );
 
     return (
-        <Card>
+        <Card onDrop={ handleDrop } onDragOver={ ( e ) => e.preventDefault() }>
             <StyledHeader color={ color } contrast={ contrast }>
                 { ! isEditMode && <h5>{ name }</h5> }
                 

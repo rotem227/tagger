@@ -1,7 +1,5 @@
 import styled, { css } from 'styled-components';
 
-import usePreloadImages from '../../hooks/use-preload-images';
-
 import ImageTag from './ImageTag';
 
 import Flex from '../../ui/Flex';
@@ -36,20 +34,26 @@ const StyledImage = styled.img`
     height: var(--styled-image-height, 25vw);
     width: 100%;
     object-fit: cover;
+    cursor: grab;
 
     @media screen and (min-width: 400px) { --styled-image-height: 20vw; }
     @media screen and (min-width: 800px) { --styled-image-height: 15vw; }
     @media screen and (min-width: 1200px) { --styled-image-height: 12vw; }
 `;
 
-export default function ImagesDisplay( { images, lazyload } ) {    
+export default function ImagesDisplay( { images, lazyload } ) {
     return (
         <StyledWrapper gap='3vw'>
             {
                 images?.length ?
-                images[ 0 ].map( ( imageData, index ) => (
+                images[ 0 ].map( ( imageData ) => (
                     <ImageContainer key={ imageData.id }>
-                        <StyledImage importance="low" src={ imageData.url } loading={ lazyload ? 'lazy' : null } />
+                        <StyledImage
+                            draggable
+                            onDragStart={ ( e ) => e.dataTransfer.setData( 'imageData', JSON.stringify( imageData ) ) }
+                            src={ imageData.url }
+                            loading={ lazyload ? 'lazy' : null }
+                        />
                         
                         <StyledImageInfo justifyContent="space-between">
                             <Text>{ imageData.label }</Text>

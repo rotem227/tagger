@@ -29,14 +29,14 @@ const StyledWrapper = styled( Flex )`
 export default function Tags() {
     const { tags, removeTag, renameTag } = useTags();
     
-    const { renameKey } = useClassifier();
+    const { renameCategory } = useClassifier();
 
     const handleRemove = useCallback( ( index ) => removeTag( index ), [] );
 
     const handleRename = useCallback( ( { index, oldName, newName } ) => {
         renameTag( index, newName );
 
-        renameKey( oldName, newName );
+        renameCategory( oldName, newName );
     }, [] );
 
     return (

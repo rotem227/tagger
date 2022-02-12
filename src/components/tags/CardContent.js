@@ -10,7 +10,7 @@ export default function CardContent( { tagName } ) {
 
     const imagesData = data[ tagName ];
 
-    const onRemove = useCallback( ( index ) => removeClassification( tagName, index ), [] );
+    const onRemove = useCallback( ( key, index ) => removeClassification( tagName, key, index ), [] );
 
     return <ImagesList list={ imagesData } onRemove={ onRemove } />;
 }

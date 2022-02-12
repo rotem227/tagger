@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 export const Context = React.createContext();
 
 export default function TagsProvider( { children } ) {
-    const [ tags, setTags ] = useState( [] );
+    // Array of objects: { name: 'Main', color: '#6d2d9c', contrast: 'white' }.
+    const [ tags, setTags ] = useState( [ { name: 'Main', color: '#6d2d9c', contrast: 'white' } ] );
 
     return (
         <Context.Provider value={ { tags, setTags } }>

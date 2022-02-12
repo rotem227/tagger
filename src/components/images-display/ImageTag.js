@@ -26,11 +26,11 @@ export default function ImageTag( { imageData } ) {
 
     const [ isSelectMode, setIsSelectMode ] = useState( false );
 
-    const { data, classify, getUsedTags } = useClassifier( imageData );
+    const { data, classify, getCategories } = useClassifier();
     
     const { tags } = useTags();
 
-    const usedTags = getUsedTags( imageData.url );
+    const usedTags = getCategories( imageData.url );
 
     const availableTags = useMemo( () => tags.filter( ( { name } ) => ! usedTags[ name ] ), [ tags, data ] );
 
@@ -42,7 +42,7 @@ export default function ImageTag( { imageData } ) {
 
 
     const handleApply = useCallback( () => {
-        classify( Object.keys( selected ), imageData )
+        classify( Object.keys( selected ), imageData.url, imageData );
 
         resetSelection();
     }, [ selected ] );
@@ -66,7 +66,7 @@ export default function ImageTag( { imageData } ) {
     }
 
     return (
-        <StyledWrapper onMouseMove={ () => setIsSelectMode( true ) }>
+        <StyledWrapper onMouseEnter={ () => setIsSelectMode( true ) }>
             <Text variant="sm">✐ TAG</Text>
 
             <ImageTagItem
