@@ -2,6 +2,11 @@ import { memo } from 'react';
 
 import styled, { css } from 'styled-components';
 
+const StyledList = styled.ul`
+    display: flex;
+    flex-direction: column-reverse;
+`;
+
 const StyledItem = styled.li`
     display: flex;
     align-items: center;
@@ -28,17 +33,17 @@ function ImagesList( { list = [], onRemove } ) {
     }
 
     return (
-        <ul>
+        <StyledList>
             {
                 list.map( ( { url }, index ) => (
                     <StyledItem key={ url }>
                         <StyledImage src={ url } />
 
-                        <StyledIcon onClick={ () => onRemove( index ) }>✕</StyledIcon>
+                        <StyledIcon onClick={ () => onRemove( url, index ) }>✕</StyledIcon>
                     </StyledItem>
                 ) )
             }
-        </ul>
+        </StyledList>
     );
 }
 
