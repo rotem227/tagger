@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import Button from '../../ui/Button';
 import Input from '../../ui/Input';
 
-const StyledTagsList = styled.div`
+const StyledTagsDialog = styled.div`
     min-width: 150px;
     position: absolute;
     top: -2px;
@@ -20,12 +20,21 @@ const StyledTagsList = styled.div`
     ` }
 `;
 
+const StyledTagList = styled.ul`
+    overflow-y: auto;
+    max-height: 150px;
+    margin-bottom: 5px;
+`;
+
 const StyledTagItem = styled.li`
     ${ ( { theme, color, contrast } ) => css`
         color: ${ contrast };
         background-color: ${ color };
         padding: ${ theme.spacing[ '8' ] };
-        margin-bottom: ${ theme.spacing[ '8' ] };
+
+        &:not(:last-child) {
+            margin-bottom: ${ theme.spacing[ '4' ] };
+        }
     ` }
 `;
 
@@ -39,8 +48,8 @@ function ImageTagItem( { tags, selected, isSelectMode, onReset, onSelect, onAppl
     }
     
     return (
-        <StyledTagsList onMouseLeave={ onReset }>
-            <ul>
+        <StyledTagsDialog onMouseLeave={ onReset }>
+            <StyledTagList>
                 {
                     tags.map( ( { name, color, contrast } ) => (
                         < StyledTagItem color={ color } contrast={ contrast } key={ name }>
@@ -48,10 +57,10 @@ function ImageTagItem( { tags, selected, isSelectMode, onReset, onSelect, onAppl
                         </ StyledTagItem>
                     ) )
                 }
-            </ul>
+            </StyledTagList>
 
             <StyledButton onClick={ onApply }>APPLY</StyledButton>
-        </StyledTagsList>
+        </StyledTagsDialog>
     );
 }
 
