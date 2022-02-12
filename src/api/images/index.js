@@ -1,6 +1,7 @@
 import Pixabay from './providers/pixabay';
+import Unsplash from './providers/unsplash';
 
-// Allowing support in additional providers in the future.
 export default {
     Pixabay,
+    Unsplash,
 };

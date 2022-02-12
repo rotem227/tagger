@@ -16,7 +16,7 @@ const StyledHeader = styled.header`
 `;
 
 function App() {
-  const { images } = useImages( [ 'Pixabay' ], { limit: 50 } );
+  const { images } = useImages( [ 'Pixabay', 'Unsplash' ], { limit: 50 } );
 
   return (
     <div className="App">

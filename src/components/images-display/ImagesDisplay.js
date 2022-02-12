@@ -42,11 +42,13 @@ const StyledImage = styled.img`
 `;
 
 export default function ImagesDisplay( { images, lazyload } ) {
+    const imagesData = images.flat();
+
     return (
         <StyledWrapper gap='3vw'>
             {
-                images?.length ?
-                images[ 0 ].map( ( imageData ) => (
+                imagesData?.length ?
+                imagesData.map( ( imageData ) => (
                     <ImageContainer key={ imageData.id }>
                         <StyledImage
                             draggable
