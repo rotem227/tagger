@@ -22,11 +22,28 @@ const StyledWrapper = styled( Grid )`
 `;
 
 const ImageContainer = styled.div`
+    position: relative;
+`;
+
+const ImageProvider = styled( Text )`
+    padding: 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
 `;
 
 const StyledImageInfo = styled( Flex )`
     ${ ( { theme } ) => css`
-        margin-top: ${ theme.spacing[ '8' ] };
+        margin-top: ${ theme.spacing[ '4' ] };
     ` }
 `;
 
@@ -44,6 +61,8 @@ const StyledImage = styled.img`
 export default function ImagesDisplay( { images, lazyload } ) {
     const imagesData = images.flat();
 
+    imagesData.sort( () => Math.floor( Math.random() * 3 ) - 1 );
+
     return (
         <StyledWrapper gap='3vw'>
             {
@@ -58,7 +77,11 @@ export default function ImagesDisplay( { images, lazyload } ) {
                         />
                         
                         <StyledImageInfo justifyContent="space-between">
-                            <Text>{ imageData.label }</Text>
+                            <Flex alignItems="flex-start" gap="5px">
+                                <Text variant="sm">{ imageData.provider }</Text>
+                                <Text variant="sm" color="secondary">|</Text>
+                                <Text variant="sm">{ imageData.label }</Text>
+                            </Flex>
                             
                             <ImageTag imageData={ imageData } />
                         </StyledImageInfo>

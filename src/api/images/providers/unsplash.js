@@ -3,7 +3,12 @@ import ApiBase from '../../api-base';
 
 export default class Unsplash extends ApiBase {
     getEndpoint() {
-        return `https://api.unsplash.com/search/photos/?per_page=${ this.config.limit }&query=Lion&client_id=dHHFqL8sRivc2Og0s9fGLWnoH38elMurwTnJZzB5Yb0`;
+        console.log( 'this.config.query', this.config.query );
+        return `https://api.unsplash.com/search/photos/?per_page=${ this.config.limit }&query=${ this.config.query }&client_id=dHHFqL8sRivc2Og0s9fGLWnoH38elMurwTnJZzB5Yb0`;
+    }
+    
+    getName() {
+        return 'Unsplash';
     }
 
     normalizeData( data ) {
@@ -14,6 +19,7 @@ export default class Unsplash extends ApiBase {
                 id,
                 url: urls.regular,
                 label: user.username,
+                provider: this.getName(),
             };
         } );
     }

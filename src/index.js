@@ -32,7 +32,9 @@ const theme = {
   },
   font: {
     size: {
-      sm: '10px',
+      xxs: '10px',
+      xs: '12px',
+      sm: '14px',
       md: '16px',
       lg: '24px',
       xl: '36px',

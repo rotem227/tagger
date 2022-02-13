@@ -11,7 +11,7 @@ const Button = styled.button`
 
     ${ ( { theme, size } ) => css`
         font-size: ${ theme.font.size[ size ] };
-        padding: ${ theme.spacing[ '8' ] } ${ theme.spacing[ '12' ] };
+        padding: ${ theme.spacing[ '4' ] } ${ theme.spacing[ '8' ] };
     ` }
 
     ${ ( { theme, variant, color } ) => {

@@ -8,6 +8,10 @@ export default class ApiBase {
             .then( ( res ) => res.json() )
             .then( ( res ) => this.normalizeData( res ) );
     }
+    
+    getName() {
+        return '';
+    }
 
     getEndpoint() {
         return '';

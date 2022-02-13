@@ -5,7 +5,7 @@ const Input = styled.input`
         border-radius: 4px;
         border: 1px solid ${ theme.color.primary.main };
         font-size: ${ theme.font.size.md };
-        padding: ${ theme.spacing[ '8' ] } ${ theme.spacing[ '16' ] };
+        padding: ${ theme.spacing[ '4' ] } ${ theme.spacing[ '8' ] };
     ` }
 `;
 

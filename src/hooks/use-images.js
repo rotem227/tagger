@@ -16,7 +16,7 @@ export default function useImages( providers, config = {} ) {
 
             Promise.all( dataProviders ).then( setImages );
         }
-    }, [] );
+    }, [ config.query ] );
 
     return {
         images,
