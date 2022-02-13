@@ -22,23 +22,9 @@ const StyledWrapper = styled( Grid )`
 `;
 
 const ImageContainer = styled.div`
-    position: relative;
-`;
-
-const ImageProvider = styled( Text )`
-    padding: 5px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
+    ${ ( { theme } ) => css`
+        padding: ${ theme.spacing[ '16' ] } 0;
+    ` }
 `;
 
 const StyledImageInfo = styled( Flex )`

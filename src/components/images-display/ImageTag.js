@@ -67,7 +67,7 @@ export default function ImageTag( { imageData } ) {
 
     return (
         <StyledWrapper onMouseEnter={ () => setIsSelectMode( true ) }>
-            <Text variant="xs">✐ TAG</Text>
+            <Text variant="xxs">✐ TAG</Text>
 
             <ImageTagItem
                 tags={ availableTags }

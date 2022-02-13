@@ -15,6 +15,7 @@ import Tags from './components/tags/Tags';
 const StyledHeader = styled.header`
     ${ ( { theme } ) => css`
         padding: ${ theme.spacing[ '16' ] };
+        border-bottom: 1px solid ${ theme.color.disabled.main };
     ` }
 `;
 
