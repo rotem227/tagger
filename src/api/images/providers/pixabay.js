@@ -12,6 +12,15 @@ export default class Pixabay extends ApiBase {
     normalizeData( data ) {
         data = data.hits;
 
-        return data.map( ( { id, largeImageURL: url, user: label } ) => ( { id, url, label, provider: this.getName() } ) );
+        return data.map( ( { id, user, largeImageURL, pageURL } ) => {
+            return {
+                id,
+                url: largeImageURL,
+                label: user,
+                provider: this.getName(),
+                providerUrl: pageURL,
+                downloadUrl: largeImageURL,
+            };
+        } );
     }
 } 

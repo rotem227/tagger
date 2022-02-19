@@ -100,7 +100,11 @@ export default function useClassifier() {
     }, [] );  
 
     const renameCategory = useCallback( ( oldCategory, newCategory ) => {
-        context.setData( ( prevState ) => {
+        if ( ! cachedData[ oldCategory ] ) {
+            return;
+        }
+
+        context.setData( ( prevState ) => {            
             const stateData = { ...prevState };
 
             const savedkey = stateData[ oldCategory ] ? [ ...stateData[ oldCategory ] ] : [];
@@ -127,12 +131,6 @@ export default function useClassifier() {
 
         return categories;
     }, [] );
-
-    //console.log( '^^^ context.data', context.data );
-
-    // useEffect( () => {
-    //     console.log( 'useEffect &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& context.data change: ', context.data );
-    // }, [ context.data ] );
 
     return {
         data: context.data,

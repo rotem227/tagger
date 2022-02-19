@@ -14,12 +14,14 @@ export default class Unsplash extends ApiBase {
     normalizeData( data ) {
         data = data.results;
 
-        return data.map( ( { id, urls, user } ) => {
+        return data.map( ( { id, urls, user, links } ) => {
             return {
                 id,
                 url: urls.regular,
                 label: user.username,
                 provider: this.getName(),
+                providerUrl: links.html,
+                downloadUrl: urls.full,
             };
         } );
     }
