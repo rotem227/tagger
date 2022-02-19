@@ -1,5 +1,12 @@
 import styled, { css } from 'styled-components';
 
+const sizeMap = {
+    xs: [ '2', '4' ],
+    sm: [ '4', '8' ],
+    md: [ '8', '12' ],
+    lg: [ '12', '16' ],
+};
+
 const Button = styled.button`
     background-color: var(--ui-button-background-color);
     border: 2px solid var(--ui-button-border-color);  
@@ -11,7 +18,7 @@ const Button = styled.button`
 
     ${ ( { theme, size } ) => css`
         font-size: ${ theme.font.size[ size ] };
-        padding: ${ theme.spacing[ '4' ] } ${ theme.spacing[ '8' ] };
+        padding: ${ theme.spacing[ sizeMap[ size ][ 0 ] ] } ${ theme.spacing[ sizeMap[ size ][ 1 ] ] };
     ` }
 
     ${ ( { theme, variant, color } ) => {

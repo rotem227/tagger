@@ -23,7 +23,7 @@ const StyledCard = styled( Card )`
 
 const StyledInputs = styled( Flex )`
     ${ ( { theme } ) => css`
-        margin: ${ theme.spacing[ '16' ] } 0;
+        margin: ${ theme.spacing[ '12' ] } 0;
     ` }
 `;
 
@@ -68,7 +68,8 @@ export default function AddCard() {
             <Heading variant="md" color="secondary">CREATE TAG</Heading>
 
             <StyledInputs alignItems="flex-start" justifyContent="space-between">
-                <StyledInput type="text" ref={ nameField } />
+                <StyledInput size="md" type="text" ref={ nameField } />
+                
                 <Color type="color" ref={ colorField } defaultValue={ randomColor } />
             </StyledInputs>
             

@@ -1,20 +1,21 @@
 import styled, { css } from 'styled-components';
 
 const Loader = styled.div.withConfig( { shouldForwardProp: ( prop ) => ! [ 'color', 'centered' ].includes( prop ) } )`
-    width: 50px;
-    height: 50px;
+    position: relative;
 
     @keyframes rotation {
         from { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
         to { transform: translateX(-50%) translateY(-50%) rotate(359deg); }
     }
 
-    ${ ( { theme, color } ) => css`
+    ${ ( { theme, color, size } ) => css`
+        width: ${ theme.font.size[ size ] };
+        height: ${ theme.font.size[ size ] };
+
         &:before {
-            --test: var(--rotem);
-            color: ${ theme.color[ color ].main };
             content: "↻";
-            font-size: 50px;
+            color: ${ theme.color[ color ].main };
+            font-size: ${ theme.font.size[ size ] };
             font-weight: bold;
             position: absolute;
             top: 50%;
@@ -35,6 +36,7 @@ const Loader = styled.div.withConfig( { shouldForwardProp: ( prop ) => ! [ 'colo
 Loader.defaultProps = {
     centered: true,
     color: 'primary',
+    size: 'lg',
 };
 
 export default Loader;

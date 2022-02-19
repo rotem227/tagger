@@ -38,7 +38,7 @@ function App() {
             <Heading color="secondary" variant="lg">TAGGER</Heading>
 
             <Flex gap="10px">
-              <Input ref={ searchInput } />
+              <Input size="sm" ref={ searchInput } />
 
               <Button size="sm" onClick={ handleSearch }>SEARCH</Button>
             </Flex>

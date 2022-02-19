@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 
 import useClassifier from '../../hooks/use-classifier';
 
+import Flex from '../../ui/Flex';
 import Input from '../../ui/Input';
 
 import { Card } from './Styled';
@@ -12,28 +13,20 @@ import CardContent from './CardContent';
 
 const StyledIcon = styled.span`
     cursor: pointer;
+
+    ${ ( { theme } ) => css`
+        &:last-child {
+            margin-inline-start: ${ theme.spacing[ '8' ] };
+        }
+    ` }
 `;
 
 const StyledInput = styled( Input )`
     height: 20px;
-    width: 160px;
-
-    ${ ( { theme } ) => css`
-        padding: ${ theme.spacing[ '2' ] } ${ theme.spacing[ '4' ] };
-        font-size: ${ theme.font.size.sm };
-    ` }
+    width: 135px;
 `;
 
-const StyledRemoveIcon = styled( StyledIcon )`
-    ${ ( { theme } ) => css`
-        margin-inline-start: ${ theme.spacing[ '8' ] };
-    ` }
-`;
-
-const StyledHeader = styled.header`
-    display: flex;
-    justify-content: space-between;
-
+const StyledHeader = styled( Flex )`
     ${ ( { theme, color, contrast } ) => css`
         background-color: ${ color };
         color: ${ contrast || '#000' };
@@ -89,18 +82,20 @@ function TagCard( { name, color, contrast, index, onRename, onRemove } ) {
 
     return (
         <Card onDrop={ handleDrop } onDragOver={ ( e ) => e.preventDefault() }>
-            <StyledHeader color={ color } contrast={ contrast }>
+            <StyledHeader as="header" alignItems="center" justifyContent="space-between" color={ color } contrast={ contrast }>
                 { ! isEditMode && <h5>{ name }</h5> }
                 
-                { isEditMode && <StyledInput type="text" defaultValue={ name } ref={ inputField } /> }
+                { isEditMode && <StyledInput size="xs" type="text" defaultValue={ name } ref={ inputField } /> }
 
-                <div>
+                <Flex alignItems="center">
+                    { isEditMode && <StyledIcon onClick={  () => setIsEditMode( false ) }>⊘</StyledIcon> }
+
                     { isEditMode && <StyledIcon onClick={ handleRename }>✔</StyledIcon> }
                     
                     { ! isEditMode && <StyledIcon onClick={ () => setIsEditMode( true ) }>✎</StyledIcon> }
                     
-                    { ! isEditMode && <StyledRemoveIcon onClick={ handleRemove }>✖</StyledRemoveIcon> }
-                </div>
+                    { ! isEditMode && <StyledIcon onClick={ handleRemove }>✖</StyledIcon> }
+                </Flex>
             </StyledHeader>
             
             <StyledMain>

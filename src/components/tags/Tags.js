@@ -21,7 +21,7 @@ const StyledWrapper = styled( Flex )`
     
     ${ ( { theme } ) => css`
         background-color: ${ theme.color.disabled.light };
-        border-top: 1px solid ${ theme.color.disabled.dark };
+        border-top: 1px solid ${ theme.color.disabled.main };
         padding: ${ theme.spacing[ '16' ] };
     ` }
 `;
