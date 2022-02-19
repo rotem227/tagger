@@ -3,7 +3,6 @@ import ApiBase from '../../api-base';
 
 export default class Unsplash extends ApiBase {
     getEndpoint() {
-        console.log( 'this.config.query', this.config.query );
         return `https://api.unsplash.com/search/photos/?per_page=${ this.config.limit }&query=${ this.config.query }&client_id=dHHFqL8sRivc2Og0s9fGLWnoH38elMurwTnJZzB5Yb0`;
     }
     

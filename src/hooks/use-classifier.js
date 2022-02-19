@@ -81,8 +81,6 @@ export default function useClassifier() {
         context.setData( ( prevState ) => {
             const stateData = { ...prevState };
 
-            console.log( 'remove: ', category, key, index );
-
             // Creating a new instance in order to trigger a state change.
             const categoryKey = [ ...stateData[ category ] ];
 
@@ -90,8 +88,6 @@ export default function useClassifier() {
 
             // Removing the image category from the saved images cached key.
             delete cachedData[ category ][ key];
-
-            console.log( 'after removal: ', cachedData );
 
             stateData[ category ] = categoryKey;
 

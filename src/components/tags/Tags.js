@@ -1,5 +1,5 @@
 
-import { useCallback } from 'react';
+import { useCallback, memo } from 'react';
 
 import styled, { css } from 'styled-components';
 
@@ -26,7 +26,7 @@ const StyledWrapper = styled( Flex )`
     ` }
 `;
 
-export default function Tags() {
+function Tags() {
     const { tags, removeTag, renameTag } = useTags();
     
     const { renameCategory } = useClassifier();
@@ -66,3 +66,5 @@ export default function Tags() {
         </StyledWrapper>
     );
 }
+
+export default memo( Tags );

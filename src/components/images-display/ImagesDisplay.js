@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import styled, { css } from 'styled-components';
 
 import Flex from '../../ui/Flex';
@@ -33,30 +35,6 @@ const StyledImageActions = styled( Flex )`
     ` }
 `;
 
-const StyledActions = styled( Flex )`
-    width: 100%;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.65);
-    color: #fff;
-    transition: all 0.2s linear;
-    
-    ${ ( { theme } ) => css`
-        padding: ${ theme.spacing[ '8' ] } ${ theme.spacing[ '4' ] };
-    ` }
-`;
-
-const StyledAction = styled.a`
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 3px;
-
-    ${ ( { theme } ) => css`
-        font-size: ${ theme.font.size.sm };
-    ` }
-`;
-
 const StyledImage = styled.img`    
     height: var(--styled-image-height, 25vw);
     width: 100%;
@@ -69,7 +47,7 @@ const StyledImage = styled.img`
     @media screen and (min-width: 1200px) { --styled-image-height: 12vw; }
 `;
 
-export default function ImagesDisplay( { images, lazyload } ) {
+function ImagesDisplay( { images, lazyload } ) {
     const imagesData = images.flat();
 
     imagesData.sort( () => Math.floor( Math.random() * 3 ) - 1 );
@@ -103,4 +81,6 @@ export default function ImagesDisplay( { images, lazyload } ) {
             }
         </StyledWrapper>
     );
-}  
+}
+
+export default memo( ImagesDisplay );
